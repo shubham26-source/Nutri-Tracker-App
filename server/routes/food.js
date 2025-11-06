@@ -4,66 +4,43 @@ const db = require('../db/database');
 const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
-const USDA_API_KEY = process.env.USDA_API_KEY || '';
-
-const MOCK_FOOD_DATABASE = [
-  { id: 1, name: 'Apple, raw', calories: 52, protein: 0.3, carbs: 14, fat: 0.2 },
-  { id: 2, name: 'Banana, raw', calories: 89, protein: 1.1, carbs: 23, fat: 0.3 },
-  { id: 3, name: 'Chicken breast, grilled', calories: 165, protein: 31, carbs: 0, fat: 3.6 },
-  { id: 4, name: 'Rice, white, cooked', calories: 130, protein: 2.7, carbs: 28, fat: 0.3 },
-  { id: 5, name: 'Broccoli, cooked', calories: 35, protein: 2.4, carbs: 7, fat: 0.4 },
-  { id: 6, name: 'Salmon, cooked', calories: 208, protein: 22, carbs: 0, fat: 13 },
-  { id: 7, name: 'Egg, whole, cooked', calories: 155, protein: 13, carbs: 1.1, fat: 11 },
-  { id: 8, name: 'Oatmeal, cooked', calories: 71, protein: 2.5, carbs: 12, fat: 1.5 },
-  { id: 9, name: 'Greek yogurt, plain', calories: 97, protein: 9, carbs: 3.6, fat: 5 },
-  { id: 10, name: 'Sweet potato, baked', calories: 90, protein: 2, carbs: 21, fat: 0.2 },
-  { id: 11, name: 'Almonds, raw', calories: 579, protein: 21, carbs: 22, fat: 50 },
-  { id: 12, name: 'Avocado, raw', calories: 160, protein: 2, carbs: 9, fat: 15 },
-  { id: 13, name: 'Quinoa, cooked', calories: 120, protein: 4.4, carbs: 21, fat: 1.9 },
-  { id: 14, name: 'Spinach, raw', calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4 },
-  { id: 15, name: 'Ground beef, 90% lean, cooked', calories: 176, protein: 25, carbs: 0, fat: 8 }
-];
+const CALORIE_NINJAS_KEY = process.env.CALORIE_NINJAS_KEY || '';
 
 router.get('/search', async (req, res) => {
-  const { query } = req.query;
+  const { q } = req.query;
 
-  if (!query) {
+  if (!q) {
     return res.status(400).json({ error: 'Search query required' });
   }
 
-  if (!USDA_API_KEY) {
-    console.log('Using mock food database (USDA_API_KEY not set)');
-    const results = MOCK_FOOD_DATABASE.filter(food => 
-      food.name.toLowerCase().includes(query.toLowerCase())
-    );
-    return res.json({ foods: results });
+  if (!CALORIE_NINJAS_KEY) {
+    return res.status(500).json({ error: 'CalorieNinjas API key not configured' });
   }
 
   try {
-    const response = await axios.get('https://api.nal.usda.gov/fdc/v1/foods/search', {
-      params: {
-        api_key: USDA_API_KEY,
-        query: query,
-        pageSize: 10
-      }
+    const response = await axios.get('https://api.calorieninjas.com/v1/nutrition', {
+      params: { query: q },
+      headers: { 'X-Api-Key': CALORIE_NINJAS_KEY }
     });
 
-    const foods = response.data.foods.map(food => ({
-      id: food.fdcId,
-      name: food.description,
-      calories: food.foodNutrients.find(n => n.nutrientName === 'Energy')?.value || 0,
-      protein: food.foodNutrients.find(n => n.nutrientName === 'Protein')?.value || 0,
-      carbs: food.foodNutrients.find(n => n.nutrientName === 'Carbohydrate, by difference')?.value || 0,
-      fat: food.foodNutrients.find(n => n.nutrientName === 'Total lipid (fat)')?.value || 0
+    if (!response.data.items || response.data.items.length === 0) {
+      return res.json({ foods: [] });
+    }
+
+    const foods = response.data.items.map((item, index) => ({
+      id: `${item.name}-${index}`,
+      name: item.name.charAt(0).toUpperCase() + item.name.slice(1),
+      calories: item.calories || 0,
+      protein: item.protein_g || 0,
+      carbs: item.carbohydrates_total_g || 0,
+      fat: item.fat_total_g || 0,
+      serving_size: item.serving_size_g || 100
     }));
 
     res.json({ foods });
   } catch (error) {
-    console.error('USDA API Error:', error.message, '- falling back to mock database');
-    const results = MOCK_FOOD_DATABASE.filter(food => 
-      food.name.toLowerCase().includes(query.toLowerCase())
-    );
-    res.json({ foods: results });
+    console.error('CalorieNinjas API Error:', error.response?.data || error.message);
+    res.status(500).json({ error: 'Error fetching nutrition data from CalorieNinjas API' });
   }
 });
 

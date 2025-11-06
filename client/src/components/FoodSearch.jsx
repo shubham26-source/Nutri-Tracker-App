@@ -15,13 +15,13 @@ function FoodSearch({ token }) {
     setMessage('')
 
     try {
-      const response = await axios.get(`/api/food/search?query=${searchQuery}`)
+      const response = await axios.get(`/api/food/search?q=${encodeURIComponent(searchQuery)}`)
       setSearchResults(response.data.foods)
       if (response.data.foods.length === 0) {
         setMessage('No foods found. Try a different search term.')
       }
     } catch (error) {
-      setMessage('Error searching for food. Please try again.')
+      setMessage(error.response?.data?.error || 'Error searching for food. Please try again.')
       console.error('Search error:', error)
     } finally {
       setLoading(false)
@@ -74,7 +74,7 @@ function FoodSearch({ token }) {
               disabled={loading}
               className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-8 py-3 rounded-lg font-semibold disabled:opacity-50"
             >
-              {loading ? 'Searching...' : 'SEARCH FOOD DATABASE'}
+              {loading ? 'Searching...' : 'Search'}
             </button>
           </div>
         </form>
@@ -120,10 +120,11 @@ function FoodSearch({ token }) {
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-gray-800 mb-2">{food.name}</h3>
+                    <p className="text-sm text-gray-500 mb-2">Per {food.serving_size}g serving</p>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                       <div>
                         <span className="text-gray-600">Calories:</span>
-                        <span className="ml-1 font-semibold">{food.calories.toFixed(1)}</span>
+                        <span className="ml-1 font-semibold">{Math.round(food.calories)}</span>
                       </div>
                       <div>
                         <span className="text-gray-600">Protein:</span>
