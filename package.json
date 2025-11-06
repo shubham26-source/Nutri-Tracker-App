@@ -1,15 +1,15 @@
 {
-  "name": "workspace",
+  "name": "calorie-contra",
   "version": "1.0.0",
-  "description": "[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](your-demo-link-here) [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/KJ-Somaiya-College-of-Engineering/calorie-contra-main) [![Python](https://img.shields.io/badge/Python-3.11-yellow)](https://python.org) [![Quart](https://img.shields.io/badge/Quart-0.19.4-red)](https://quart.palletsprojects.com/)",
-  "main": "index.js",
+  "description": "NutriTrack - A nutrition and calorie tracking web application built with Express and React",
+  "main": "server/index.js",
   "scripts": {
-    "server": "node server/index.js",
-    "client": "cd client && npm run dev",
-    "dev": "node server/index.js & cd client && npm run dev",
+    "start": "node server/index.js",
+    "build": "cd client && npm run build",
+    "dev:client": "cd client && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["nutrition", "calorie-tracker", "health", "fitness"],
   "author": "",
   "license": "ISC",
   "dependencies": {
