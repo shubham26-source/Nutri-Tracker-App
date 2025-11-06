@@ -47,6 +47,7 @@ function Register({ onLogin }) {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+              autoComplete="username"
               required
             />
           </div>
@@ -58,6 +59,7 @@ function Register({ onLogin }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+              autoComplete="email"
               required
             />
           </div>
@@ -69,6 +71,7 @@ function Register({ onLogin }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+              autoComplete="new-password"
               required
             />
           </div>
@@ -80,6 +83,7 @@ function Register({ onLogin }) {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+              autoComplete="new-password"
               required
             />
           </div>
