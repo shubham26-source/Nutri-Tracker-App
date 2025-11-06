@@ -11,14 +11,15 @@ A modern, full-stack nutrition tracking web application built with **React.js**,
 - **Modern UI** - Beautiful gradient design with TailwindCSS
 - **Real-time Nutrition Calculation** - Instant macronutrient breakdown
 
-## Recent Migration (Nov 6, 2025)
+## Recent Updates (Nov 6, 2025)
 - ✅ **Complete stack migration from Python/Quart to React.js + Node.js/Express.js**
 - ✅ Built Express.js REST API with authentication and food endpoints
 - ✅ Created React.js SPA with Vite and TailwindCSS v4
 - ✅ Implemented JWT authentication with bcrypt password hashing
 - ✅ Added mock food database for out-of-the-box functionality
-- ✅ Configured Vite proxy for seamless API communication
-- ✅ Set up dual-server workflow (backend port 3000, frontend port 5000)
+- ✅ **Production-ready single-server setup** - Express serves built React app
+- ✅ Configured for Replit deployment with proper host settings
+- ✅ Optimized workflow to run single server on port 5000
 
 ## Architecture
 - **Frontend**: React.js 19.x with Vite build tool
@@ -94,26 +95,41 @@ calorie-contra/
 
 ## Running the Application
 
-**Start both servers:**
+**Production Mode (Single Server):**
 ```bash
-npm run dev
+npm start
 ```
 
-This runs:
-- Express backend on `http://localhost:3000`
-- React frontend on `http://localhost:5000`
+This runs the Express server on port 5000, which serves both:
+- The REST API at `/api/*` endpoints
+- The built React frontend for all other routes
+
+**Development Mode (Frontend only):**
+```bash
+npm run dev:client
+```
+
+This runs the Vite dev server with hot-reload for faster frontend development.
+
+**Build Frontend:**
+```bash
+npm run build
+```
+
+Builds the React app for production. Run this before deploying or testing the production setup.
 
 Access the app at **http://localhost:5000**
 
 ## Current Status
-✅ **FULLY FUNCTIONAL** - Modern React + Node.js stack
+✅ **PRODUCTION-READY** - Optimized single-server architecture
 - Registration and login working with JWT auth
 - Food search working with mock database
 - "Add to Log" functionality working perfectly
 - Food log viewer showing all logged items
 - Beautiful TailwindCSS styling with gradients
-- Both servers running simultaneously
-- Production-ready architecture
+- Single Express server serves built React app and API
+- Configured for Replit deployment (port 5000, allowed hosts)
+- Clean codebase with removed legacy Python files
 
 ## Documentation
 See **ARCHITECTURE.md** for comprehensive technical documentation including:
