@@ -16,7 +16,7 @@ A modern, full-stack nutrition tracking web application built with **React.js**,
 - ✅ Built Express.js REST API with authentication and food endpoints
 - ✅ Created React.js SPA with Vite and TailwindCSS v4
 - ✅ Implemented JWT authentication with bcrypt password hashing
-- ✅ Added mock food database for out-of-the-box functionality
+- ✅ **Integrated CalorieNinjas API** - Real-time nutrition data from external API
 - ✅ **Production-ready single-server setup** - Express serves built React app
 - ✅ Configured for Replit deployment with proper host settings
 - ✅ Optimized workflow to run single server on port 5000
@@ -27,17 +27,17 @@ A modern, full-stack nutrition tracking web application built with **React.js**,
 - **Backend**: Node.js 20 with Express.js framework
 - **Database**: SQLite3 with promise-based wrapper
 - **Authentication**: JWT tokens with bcryptjs password hashing
-- **API**: USDA FoodData Central (optional - falls back to mock database)
+- **API**: CalorieNinjas Nutrition API (real-time food data)
 - **Routing**: React Router for client-side navigation
 
 ## Environment Variables
 ```bash
 JWT_SECRET=your-jwt-secret-key
-USDA_API_KEY=your-usda-api-key  # Optional - uses mock database if not set
-PORT=3000
+CALORIE_NINJAS_KEY=your-calorieninjas-api-key  # Required for food search
+PORT=5000
 ```
 
-**Note**: The app includes a mock food database with 15 common foods, so it works perfectly without any API keys for testing and demonstration.
+**Note**: The app uses CalorieNinjas API for real-time nutrition data. Get a free API key at https://calorieninjas.com/api
 
 ## User Preferences
 - Clean, modern UI with gradient backgrounds
@@ -80,8 +80,8 @@ calorie-contra/
 
 ### Food Search with Add to Log
 1. User searches for food by name
-2. Express backend queries USDA API or mock database
-3. Results displayed with nutrition info (calories, protein, carbs, fat)
+2. Express backend queries CalorieNinjas API for real-time nutrition data
+3. Results displayed with nutrition info (calories, protein, carbs, fat, serving size)
 4. **Green "+ Add to Log" button** on each result
 5. One click logs the food to user's personal database
 6. Success message confirms the action
@@ -89,7 +89,7 @@ calorie-contra/
 ### API Endpoints
 - `POST /api/auth/register` - Create new user account
 - `POST /api/auth/login` - Login and get JWT token
-- `GET /api/food/search?query=apple` - Search for foods
+- `GET /api/food/search?q=apple` - Search for foods via CalorieNinjas API
 - `POST /api/food/log` - Log a food (protected)
 - `GET /api/food/logs` - Get user's logged foods (protected)
 
@@ -123,13 +123,15 @@ Access the app at **http://localhost:5000**
 ## Current Status
 ✅ **PRODUCTION-READY** - Optimized single-server architecture
 - Registration and login working with JWT auth
-- Food search working with mock database
+- Food search integrated with CalorieNinjas API for real nutrition data
 - "Add to Log" functionality working perfectly
 - Food log viewer showing all logged items
 - Beautiful TailwindCSS styling with gradients
 - Single Express server serves built React app and API
 - Configured for Replit deployment (port 5000, allowed hosts)
 - Clean codebase with removed legacy Python files
+
+**Important**: Verify your CALORIE_NINJAS_KEY is valid and active at https://calorieninjas.com/api
 
 ## Documentation
 See **ARCHITECTURE.md** for comprehensive technical documentation including:
