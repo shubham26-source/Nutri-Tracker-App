@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}NutriTrack - Smart Calorie Counter{% endblock %}</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --soft-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --background-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --border-radius: 16px;
+            --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --text-color-dark: #1e293b;
+            --text-color-light: #f8fafc;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--background-gradient);
+            color: var(--text-color-dark);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Beautiful animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(240, 147, 251, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: floating 30s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        /* Modern Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--card-shadow);
+            border: none;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-color-dark) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: translateY(-2px);
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            width: 40px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .brand-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            font-weight: 500 !important;
+            color: var(--text-muted) !important;
+            padding: 0.75rem 1.25rem !important;
+            border-radius: 12px !important;
+            transition: all 0.3s ease !important;
+            margin: 0 0.25rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(102, 126, 234, 0.1) !important;
+            color: #667eea !important;
+            transform: translateY(-2px);
+        }
+
+        .btn-logout {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+            color: white;
+        }
+
+        .btn-outline-modern {
+            background: transparent;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            color: #667eea;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 0 0.25rem;
+        }
+
+        .btn-outline-modern:hover {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* Alert Styles */
+        .alert {
+            border: none !important;
+            border-radius: var(--border-radius) !important;
+            box-shadow: var(--card-shadow) !important;
+            margin-bottom: 2rem !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .alert-primary {
+            background: rgba(102, 126, 234, 0.1) !important;
+            color: #667eea !important;
+            border-left: 4px solid #667eea !important;
+        }
+
+        /* Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 350px;
+            max-height: 500px;
+            box-shadow: var(--card-shadow-hover);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.3s ease;
+            z-index: 10000;
+        }
+
+        .chatbot-container.visible {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #peekobot-inner {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding: 1.5rem;
+            max-height: 350px;
+        }
+
+        .chat-response, .chat-ask {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 18px;
+            max-width: 85%;
+            word-wrap: break-word;
+            line-height: 1.4;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-response {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--text-color-dark);
+            align-self: flex-start;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .chat-ask {
+            background: var(--primary-gradient);
+            color: white;
+            align-self: flex-end;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin-left: auto;
+        }
+
+        .choices {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            justify-content: flex-start;
+        }
+
+        .choice {
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            background: var(--soft-gradient);
+            color: var(--text-color-dark);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .choice:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .choice:disabled {
+            opacity: 0.5;
+            cursor: default;
+            transform: none;
+        }
+
+        .chat-input-container {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(102, 126, 234, 0.1);
+            background: rgba(248, 250, 252, 0.8);
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+        }
+
+        #chat-input {
+            resize: none;
+            border-radius: 15px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            padding: 12px 15px;
+            font-size: 0.9rem;
+            width: 100%;
+            height: 70px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        #chat-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        #chat-submit {
+            margin-top: 0.75rem;
+            width: 100%;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        #chat-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        #chatbot-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--secondary-gradient);
+            border: none;
+            border-radius: 50%;
+            width: 65px;
+            height: 65px;
+            box-shadow: var(--card-shadow-hover);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10001;
+            transition: all 0.3s ease;
+        }
+
+        #chatbot-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(240, 147, 251, 0.6);
+        }
+
+        #chatbot-toggle svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+
+        /* Modern scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-gradient);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.25rem;
+            }
+            
+            .nav-link {
+                margin: 0.25rem 0;
+                text-align: center;
+            }
+            
+            .chatbot-container {
+                width: 320px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            #chatbot-toggle {
+                bottom: 20px;
+                right: 20px;
+                width: 55px;
+                height: 55px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/home">
+                <img src="../static/assets/img/calorie-contra-logo.svg" alt="NutriTrack Logo">
+                <span class="brand-text">NutriTrack</span>
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navcol-1">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navcol-1">
+                {% if session["user_id"] %}
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="/food-log">Food Log</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+                <a class="btn-logout" href="/logout">Logout</a>
+                {% else %}
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="btn-outline-modern" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn-logout" href="/register">Register</a>
+                    </li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% if get_flashed_messages() %}
+    <div class="container mt-3">
+        <div class="alert alert-primary text-center" role="alert">
+            <i class="fas fa-info-circle me-2"></i>
+            {{ get_flashed_messages() | join(" ") }}
+        </div>
+    </div>
+    {% endif %}
+
+    <main class="container-fluid">
+        {% block main %}{% endblock %}
+    </main>
+
+    <div id="peekobot-container" class="chatbot-container" aria-hidden="true">
+        <div id="peekobot-inner"></div>
+
+        <div class="chat-input-container">
+            <textarea id="chat-input" placeholder="Ask me about nutrition..." rows="3"></textarea>
+            <button id="chat-submit" type="button">Send Message</button>
+        </div>
+    </div>
+
+    <button id="chatbot-toggle" type="button" aria-label="Toggle Nutrition Assistant">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 19A6.99 6.99 0 0 1 10.167 15.871l1.666-1.107A5.0007 5.0007 0 0 0 20.167 14.87l1.666 1.107A6.99 6.99 0 0 1 16 19z" />
+            <path d="M20 8a2 2 0 1 0 2 2 1.9806 1.9806 0 0 0-2-2z" />
+            <path d="M12 8a2 2 0 1 0 2 2 1.9806 1.9806 0 0 0-2-2z" />
+            <path d="M17.7358 30l-1.7358-1 4-7h6a1.9966 1.9966 0 0 0 2-2v-14a1.9966 1.9966 0 0 0-2-2h-20a1.9966 1.9966 0 0 0-2 2v14a1.9966 1.9966 0 0 0 2 2h9v2h-9a3.9993 3.9993 0 0 1-4-4v-14a3.9988 3.9988 0 0 1 4-4h20a3.9988 3.9988 0 0 1 4 4v14a3.9993 3.9993 0 0 1-4 4h-4.8354z" />
+            <path d="M0 0h32v32H0z" fill="none" />
+        </svg>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Chatbot functionality
+        
+// Chatbot functionality with Gemini API integration
+(() => {
+    const chatData = {
+        1: {
+            text: 'Hello! I\'m your nutrition assistant powered by AI. I can help you with calories, nutrition facts, meal planning, and health questions. What would you like to know?',
+            options: [
+                { text: '👋 Hi there!', next: 2 }
+            ]
+        },
+        2: {
+            text: 'I can help you with:\n• Food calories and nutrition\n• Meal planning advice\n• Health and diet questions\n• Exercise and fitness tips\n\nJust type your question below!',
+            options: [
+                { text: '🍎 Ask about food', next: 'input' },
+                { text: '💪 Fitness tips', next: 'input' },
+                { text: '📝 Meal planning', next: 'input' }
+            ]
+        }
+    };
+
+    const container = document.getElementById('peekobot-container');
+    const inner = document.getElementById('peekobot-inner');
+    const chatInput = document.getElementById('chat-input');
+    const chatSubmit = document.getElementById('chat-submit');
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+
+    let currentStep = 1;
+    let isLoading = false;
+
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    const scrollToBottom = () => inner.scrollTop = inner.scrollHeight;
+
+    const renderMessage = (text, isUser = false) => {
+        const message = document.createElement('div');
+        message.classList.add(isUser ? 'chat-ask' : 'chat-response');
+        message.innerHTML = text.replace(/\n/g, '<br>');
+        inner.appendChild(message);
+        scrollToBottom();
+    };
+
+    const renderTyping = () => {
+        const typing = document.createElement('div');
+        typing.classList.add('chat-response', 'typing-indicator');
+        typing.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+        typing.id = 'typing-indicator';
+        inner.appendChild(typing);
+        scrollToBottom();
+        return typing;
+    };
+
+    const removeTyping = () => {
+        const typing = document.getElementById('typing-indicator');
+        if (typing) typing.remove();
+    };
+
+    const renderOptions = (options) => {
+        const optionsContainer = document.createElement('div');
+        optionsContainer.classList.add('choices');
+        options.forEach(option => {
+            const button = document.createElement('button');
+            button.classList.add('choice');
+            button.textContent = option.text;
+            if (option.next === 'input') {
+                button.addEventListener('click', () => {
+                    clearOptions();
+                    chatInput.focus();
+                });
+            } else {
+                button.addEventListener('click', () => handleChoice(option.next));
+            }
+            optionsContainer.appendChild(button);
+        });
+        inner.appendChild(optionsContainer);
+        scrollToBottom();
+    };
+
+    const clearOptions = () => {
+        const oldOptions = inner.querySelector('.choices');
+        if (oldOptions) oldOptions.remove();
+    };
+
+    const handleChoice = async (nextStep) => {
+        clearOptions();
+        await sleep(500);
+        renderMessage(chatData[nextStep].text);
+        currentStep = nextStep;
+        if (chatData[nextStep].options) {
+            await sleep(800);
+            renderOptions(chatData[nextStep].options);
+        }
+    };
+
+    const sendToGemini = async (userMessage) => {
+        if (isLoading) return;
+        isLoading = true;
+
+        // Show typing indicator
+        const typingIndicator = renderTyping();
+        
+        // Disable input
+        chatInput.disabled = true;
+        chatSubmit.disabled = true;
+        chatSubmit.textContent = 'Thinking...';
+
+        try {
+            const response = await fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    prompt: `As a nutrition and health assistant, please answer this question: ${userMessage}` 
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            
+            // Remove typing indicator
+            removeTyping();
+            
+            // Show AI response
+            renderMessage(data.text || 'Sorry, I couldn\'t process your request right now.');
+            
+        } catch (error) {
+            console.error('Error calling Gemini API:', error);
+            removeTyping();
+            renderMessage('Sorry, I\'m having trouble connecting right now. Please try again later! 🤖');
+        } finally {
+            // Re-enable input
+            isLoading = false;
+            chatInput.disabled = false;
+            chatSubmit.disabled = false;
+            chatSubmit.textContent = 'Send Message';
+            scrollToBottom();
+        }
+    };
+
+    chatSubmit.addEventListener('click', async () => {
+        const userText = chatInput.value.trim();
+        if (!userText || isLoading) return;
+        
+        // Clear options if any
+        clearOptions();
+        
+        // Show user message
+        renderMessage(userText, true);
+        chatInput.value = '';
+
+        // Send to Gemini API
+        await sendToGemini(userText);
+    });
+
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            chatSubmit.click();
+        }
+    });
+
+    chatbotToggle.addEventListener('click', () => {
+        container.classList.toggle('visible');
+        if (container.classList.contains('visible')) {
+            setTimeout(() => chatInput.focus(), 300);
+        }
+    });
+
+    // Start conversation
+    setTimeout(() => {
+        renderMessage(chatData[currentStep].text);
+        setTimeout(() => renderOptions(chatData[currentStep].options), 1000);
+    }, 500);
+})();
+
+
+    </script>
+</body>
+</html>
+

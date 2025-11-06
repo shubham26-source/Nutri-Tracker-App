@@ -1,0 +1,24 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](your-demo-link-here) [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/KJ-Somaiya-College-of-Engineering/calorie-contra-main) [![Python](https://img.shields.io/badge/Python-3.11-yellow)](https://python.org) [![Quart](https://img.shields.io/badge/Quart-0.19.4-red)](https://quart.palletsprojects.com/)",
+  "main": "index.js",
+  "scripts": {
+    "server": "node server/index.js",
+    "client": "cd client && npm run dev",
+    "dev": "node server/index.js & cd client && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.13.2",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.7"
+  }
+}

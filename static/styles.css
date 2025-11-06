@@ -1,0 +1,317 @@
+/* Main CSS file for the project */
+/* if you want to add more styles, add them here */
+/* look in the asset file for more styles */
+
+/* used in home.html */
+
+h1 {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+.search-input-container {
+  margin-bottom: 1.5em;
+}
+
+.text-center {
+  text-align: center;
+}
+
+
+.container.index {
+  display: flex;
+  justify-content: center;
+}
+
+
+.gmail-logo {
+  margin-left: -3px;
+  margin-top: -3px;
+  width: 15px;
+  height: 15px;
+}
+
+
+body::before {
+  content: "";
+  background-image: url('/static/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+
+.loader {
+  transition: opacity 0.75s, visiblity 0.75s;
+}
+
+.loader-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.label {
+  border: 2px solid black;
+  width: 340px;
+  margin: 2.5em auto;
+  padding: 0 7px;
+}
+
+header h1 {
+  text-align: center;
+  margin: -4px 0;
+  letter-spacing: 0.15px
+}
+
+
+/* Nutritional label style in food.html template */
+/*start*/
+
+.display-1 {
+  margin-bottom: 0.25em;
+  font-weight: 750;
+}
+
+#energy {
+  font-size: 48px;
+}
+
+p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.divider {
+  border-bottom: 1px solid #888989;
+  margin: 2px 0;
+}
+
+.bold {
+  font-weight: 800;
+}
+
+.large {
+  height: 10px;
+}
+
+.large,
+.medium {
+  background-color: black;
+  border: 0;
+}
+
+.medium {
+  height: 5px;
+}
+
+.small-text {
+  font-size: 0.85rem;
+}
+
+
+.calories-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.calories-info h2 {
+  margin: 0;
+}
+
+.left-container p {
+  margin: -5px -2px;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.calories-info span {
+  margin: -7px -2px;
+  font-size: 2.4em;
+  font-weight: 700;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.indent {
+  margin-left: 1em;
+}
+
+.double-indent {
+  margin-left: 2em;
+}
+
+.daily-value p:not(.no-divider) {
+  border-bottom: 1px solid #888989;
+}
+
+.note {
+  font-size: 0.6rem;
+  margin: 5px 0;
+  padding: 0 8px;
+  padding-right: 8px;
+  text-indent: -8px;
+}
+
+b {
+  white-space: pre-wrap;
+}
+
+
+/* end */
+/* button[type="submit"] small {
+  display: block !important;
+
+} */
+
+/* used in search_food.html */
+.list-group,
+.nav.nav-tabs {
+  max-width: 600px;
+  margin: auto;
+  padding: 1.25em;
+}
+
+.food-form {
+  position: relative;
+}
+
+button[id="quick-info"] {
+  position: absolute;
+  right: 1em;
+  bottom: 1em;
+  z-index: 4;
+}
+
+.nav-tabs li.nav-item .nav-link {
+  color: #0f0f0f;
+  border: unset;
+}
+
+.nav-tabs li.nav-item:hover {
+  background-color: #aec0ab37;
+}
+
+.nav-tabs li.nav-item .nav-link.active {
+  background-color: #A2B29F;
+
+}
+
+#food-description {
+  font-weight: bold;
+}
+
+.list-group-item.list-group-item-action {
+  border: unset;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.15);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.15);
+  background-color: #BDD2B6;
+  line-height: 1.6em;
+  padding: 1.5em;
+
+}
+
+.list-group-item.list-group-item-action:hover {
+  background-color: #b7cbb1;
+}
+
+/* 
+.popover-header {
+  background-color: #F8EDE3;
+} */
+
+
+/* small info */
+
+p {
+  margin: 0;
+}
+
+
+.facts {
+  width: 100%;
+}
+
+.facts thead tr th,
+.facts thead tr td {
+  border: 0;
+}
+
+.facts th,
+.facts td {
+  font-weight: normal;
+  text-align: left;
+  padding: 0.25rem 0;
+  border-top: 1px solid black;
+  white-space: nowrap;
+}
+
+.facts td:last-child {
+  text-align: right;
+}
+
+.facts .blank-cell {
+  width: 1rem;
+  border-top: 0;
+}
+
+.facts .thick-row th,
+.facts .thick-row td {
+  border-top-width: 5px;
+}
+
+.small-info {
+  font-size: 0.7rem;
+}
+
+.facts {
+  /* border-bottom: 1px solid #999; */
+  margin: 1em 0 0.5rem;
+}
+
+.facts thead tr {
+  border-bottom: 1px solid black;
+}
+
+.facts td:last-child {
+  text-align: left;
+}
+
+.facts th,
+.facts td {
+  border: 0;
+  padding: 0.10rem 0;
+}
+
+#select-date-label {
+  font-weight: 600;
+  font-size: 1.5em;
+  padding-bottom: 0.25em;
+
+}
+
+.input-group {
+  width: 250px;
+  margin: auto;
+}

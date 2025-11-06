@@ -1,0 +1,436 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Food Log Dashboard
+{% endblock %}
+
+{% block main %}
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+        --border-radius: 20px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        min-height: 100vh;
+    }
+
+    .dashboard-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem;
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-shadow);
+    }
+
+    .dashboard-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard-subtitle {
+        color: #64748b;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .date-selector {
+        background: white;
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-shadow);
+        margin-bottom: 3rem;
+    }
+
+    .date-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .date-label {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1e293b;
+        margin: 0;
+    }
+
+    .date-input {
+        padding: 0.75rem 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: var(--transition);
+        min-width: 180px;
+    }
+
+    .date-input:focus {
+        outline: none;
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .date-submit-btn {
+        padding: 0.75rem 2rem;
+        background: var(--primary-gradient);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: var(--transition);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .date-submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .traditional-chart {
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-shadow);
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .traditional-chart .animation {
+        text-align: center;
+    }
+
+    .traditional-chart .animation img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+    }
+
+    .chart-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .macros-card {
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-shadow);
+        padding: 2rem;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .macros-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--card-shadow-hover);
+    }
+
+    .macros-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--success-gradient);
+    }
+
+    .macros-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 1rem;
+    }
+
+    .macro-item {
+        text-align: center;
+    }
+
+    .circular-chart {
+        display: block;
+        margin: 0 auto;
+        max-width: 120px;
+        max-height: 120px;
+    }
+
+    .circle-bg {
+        fill: none;
+        stroke: #eee;
+        stroke-width: 3.8;
+    }
+
+    .circle {
+        fill: none;
+        stroke-width: 2.8;
+        stroke-linecap: round;
+        animation: progress 1s ease-out forwards;
+    }
+
+    @keyframes progress {
+        0% { stroke-dasharray: 0 100; }
+    }
+
+    .protein-circle { stroke: #4ecdc4; }
+    .carbs-circle { stroke: #45b7d1; }
+    .fat-circle { stroke: #96ceb4; }
+
+    .percentage {
+        fill: #666;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.5em;
+        text-anchor: middle;
+        font-weight: 600;
+    }
+
+    .macro-label {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .protein-label { color: #4ecdc4; }
+    .carbs-label { color: #45b7d1; }
+    .fat-label { color: #96ceb4; }
+
+    .calories-summary {
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-shadow);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .calories-number {
+        font-size: 4rem;
+        font-weight: 700;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+    }
+
+    .calories-label {
+        font-size: 1.2rem;
+        color: #64748b;
+        font-weight: 500;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 3rem;
+        color: #64748b;
+    }
+
+    .no-data-icon {
+        font-size: 4rem;
+        color: #cbd5e1;
+        margin-bottom: 1rem;
+    }
+
+    .no-data-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .no-data-text {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-container {
+            padding: 1rem 0.5rem;
+        }
+
+        .dashboard-title {
+            font-size: 2rem;
+        }
+
+        .date-form {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .date-input {
+            min-width: auto;
+        }
+
+        .macros-container {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .calories-number {
+            font-size: 3rem;
+        }
+    }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">Food Log Dashboard</h1>
+        <p class="dashboard-subtitle">Track your daily nutrition and weekly progress</p>
+    </div>
+
+    <div class="date-selector">
+        <form method="GET" action="/food-log" class="date-form">
+            <label for="selected_date" class="date-label">
+                <i class="fas fa-calendar-alt me-2"></i>Select Date:
+            </label>
+            <input class="date-input" type="date" id="selected_date" name="selected_date" value="{{ selected_date }}" />
+            <button class="date-submit-btn" type="submit">
+                <i class="fas fa-search me-1"></i>View Data
+            </button>
+        </form>
+    </div>
+
+    {% if graph_html %}
+        <!-- Weekly Chart -->
+        <div class="traditional-chart">
+            <h2 class="chart-title">Weekly Nutrition Progress</h2>
+            {{ graph_html|safe }}
+        </div>
+    
+        <!-- Today's Calories Summary -->
+        <div class="calories-summary">
+            <div class="calories-number" id="calories-display">0</div>
+            <div class="calories-label">Calories Today</div>
+        </div>
+    
+        <!-- Today's Macros -->
+        <div class="macros-card">
+            <h3 class="chart-title">Today's Macronutrients</h3>
+            <div class="macros-container">
+                <div class="macro-item">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle protein-circle" id="protein-circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <text x="18" y="20.35" class="percentage" id="protein-value">0g</text>
+                    </svg>
+                    <div class="macro-label protein-label">Protein</div>
+                </div>
+                
+                <div class="macro-item">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle carbs-circle" id="carbs-circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <text x="18" y="20.35" class="percentage" id="carbs-value">0g</text>
+                    </svg>
+                    <div class="macro-label carbs-label">Carbs</div>
+                </div>
+                
+                <div class="macro-item">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle fat-circle" id="fat-circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <text x="18" y="20.35" class="percentage" id="fat-value">0g</text>
+                    </svg>
+                    <div class="macro-label fat-label">Fat</div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="no-data">
+            <div class="no-data-icon">
+                <i class="fas fa-chart-pie"></i>
+            </div>
+            <h3 class="no-data-title">No Data Available</h3>
+            <p class="no-data-text">Start logging your meals to see beautiful nutrition charts and weekly progress!</p>
+        </div>
+    {% endif %}
+</div>
+
+{% set todayData = today_totals|tojson if today_totals else '{"calories": 0, "protein": 0, "carbs": 0, "fat": 0}' %}
+<script>
+    let todayDataObj = JSON.parse('{{ todayData|safe }}');
+
+    function setCircularProgress(elementId, percentage, value, suffix = '') {
+        const circle = document.getElementById(elementId);
+        const valueElement = document.getElementById(elementId.replace('-circle', '-value'));
+        
+        if (circle && valueElement) {
+            const circumference = 100;
+            const progress = Math.min(percentage, 100);
+            
+            circle.style.strokeDasharray = `${progress}, ${circumference}`;
+            valueElement.textContent = Math.round(value) + suffix;
+        }
+    }
+
+    function renderCharts() {
+        // Update calories display
+        document.getElementById('calories-display').textContent = Math.round(todayDataObj.calories);
+        
+        // Daily macro goals
+        const proteinGoal = 100;
+        const carbsGoal = 250;
+        const fatGoal = 80;
+        
+        const proteinPercentage = (todayDataObj.protein / proteinGoal) * 100;
+        const carbsPercentage = (todayDataObj.carbs / carbsGoal) * 100;
+        const fatPercentage = (todayDataObj.fat / fatGoal) * 100;
+
+        // Set circular progress for macros
+        setCircularProgress('protein-circle', proteinPercentage, todayDataObj.protein, 'g');
+        setCircularProgress('carbs-circle', carbsPercentage, todayDataObj.carbs, 'g');
+        setCircularProgress('fat-circle', fatPercentage, todayDataObj.fat, 'g');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var hasGraph = "{{ 'true' if graph_html else 'false' }}";
+        if (hasGraph) {
+            renderCharts();
+            
+            // Existing animation code for bar chart
+            const increaseButton = document.querySelector('button[title="Increase speed"]');
+            const playButton = document.querySelector('button[title="Play"]');
+            const graph = document.querySelector('.animation img');
+            
+            if (graph) {
+                graph.classList.add('img-fluid');
+            }
+
+            if (increaseButton) {
+                increaseButton.click();
+                increaseButton.click();
+            }
+            if (playButton) {
+                playButton.click();
+            }
+        }
+    });
+</script>
+{% endblock %}
