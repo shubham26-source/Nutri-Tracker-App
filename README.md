@@ -1,15 +1,8 @@
-🥗 NutriTrack – Full-Stack Nutrition Tracker (React + Node.js + Express)
+🥗 NutriTrack – Full-Stack Nutrition Tracker
+GitHub Repository
+React - Node.js - Express
 
-
-
-
-
-
-
-
-
-
-A modern, full-stack nutrition tracking web application that allows users to search foods, view nutrition details, and maintain a personal calorie log — built using React, TailwindCSS, Node.js, Express.js, and a lightweight database.
+A modern, full-stack nutrition tracking web application that allows users to search foods, view nutrition details, and maintain a personal calorie log — built with React, TailwindCSS, Node.js, Express.js, and a lightweight local database.
 
 ✅ Features
 🔍 Food Search
@@ -26,13 +19,11 @@ Add food items to your daily log
 
 View calories, portions & nutrition info
 
-Automatically stores logs in the backend database
+Auto-store logs in backend database
 
-📊 My Food Log Dashboard
+📊 Food Log Dashboard
 
-View your eaten items
-
-Track calorie consumption
+View eaten items and track calorie consumption
 
 Organized by date
 
@@ -40,129 +31,125 @@ Organized by date
 
 Fully responsive React interface
 
-Styled with TailwindCSS + smooth gradients
+Styled with TailwindCSS and smooth gradients
 
-Clean and modern visual design
+Clean, modern visual design
 
 🗄 Backend API
 
 Node.js + Express REST API
 
-Separate routes for:
-✅ Food Search
-✅ Add Food Log
-✅ Fetch Log
+Separate routes for: Food Search, Add Food Log, Fetch Log
 
 Clean folder structure
 
 🛠 Tech Stack
 Frontend
+React (Vite)
 
-✅ React (Vite-based setup)
+TailwindCSS
 
-✅ TailwindCSS
+Component-based UI
 
-✅ Component-based UI
-
-✅ Fetch API for backend communication
+Fetch API integration
 
 Backend
+Node.js
 
-✅ Node.js
+Express.js
 
-✅ Express.js
+REST API endpoints
 
-✅ REST endpoints
-
-✅ API input validation
+API input validation
 
 Database
+Local SQLite / .db file
 
-✅ Local database file (SQLite / .db)
+Stores user logs
 
-✅ Stores user logs
+Lightweight & fast
 
-✅ Lightweight & fast
-
-📁 Project Structure (Simplified)
+📁 Project Structure
+text
 NutriTrack/
 │
-├── client/                 # React Frontend
+├── client/                  # React Frontend
 │   ├── src/
-│   │   ├── components/     # UI components (Search, Log, Cards, Navbar)
-│   │   ├── pages/          # Search page, MyLog page
+│   │   ├── components/      # UI: Search, Log, Cards, Navbar
+│   │   ├── pages/           # Search page, MyLog page
 │   │   └── App.jsx
 │   ├── public/
 │   └── package.json
 │
-├── server/                 # Backend (Node + Express)
+├── server/                  # Backend (Node + Express)
 │   ├── routes/
-│   │   ├── food.js         # Food search API
-│   │   └── log.js          # Add/view food log API
+│   │   ├── food.js          # Food search API
+│   │   └── log.js           # Add/view food log API
 │   ├── db/
-│   │   └── database.js     # DB connection + queries
-│   ├── index.js            # Server entry
+│   │   └── database.js      # DB connection + queries
+│   ├── index.js             # Server entry
 │   └── package.json
 │
 └── README.md
-
 🚀 Quick Start
-✅ 1. Clone the repository
+Clone the repository:
+
+bash
 git clone https://github.com/shubham26-source/Nutri-Tracker-App.git
 cd Nutri-Tracker-App
+Install backend dependencies:
 
-✅ 2. Install backend dependencies
+bash
 cd server
 npm install
+Install frontend dependencies:
 
-✅ 3. Install frontend dependencies
+bash
 cd ../client
 npm install
+Start the backend:
 
-✅ 4. Start the backend
+bash
 npm start
+Start the React frontend:
 
-✅ 5. Start the React frontend
+bash
 npm run dev
-
 📸 Screenshots
-✅ Home / Search Page
+Home / Search Page
+(Insert screenshot here)
 
-(Insert updated screenshot here)
+Food Log Page
+(Insert screenshot here)
 
-✅ Food Log Page
-
-(Insert updated screenshot here)
-
-✅ Backend API Response
-
-(Optional)
+Backend API Response (Optional)
 
 🧩 API Endpoints
-🔍 Search Food
-GET /api/food/search?query=apple
+Search Food
 
-➕ Add Food Log
+text
+GET /api/food/search?query=apple
+Add Food Log
+
+text
 POST /api/log/add
 {
   "name": "Banana",
   "calories": 105
 }
+Get Logs
 
-📄 Get Logs
+text
 GET /api/log/all
-
 ✅ Future Enhancements
-
 Integrate real-time nutrition API (CalorieNinjas / Edamam)
 
 Add user authentication
 
-Add weekly & monthly analytics
+Weekly & monthly analytics
 
-Add AI-powered nutrition assistant
+AI-powered nutrition assistant
 
 🎓 Developed By
-
 Shubham Sharma
-B.Tech – K.J. Somaiya College of Engineering
+M.Tech – K.J. Somaiya College of Engineering
