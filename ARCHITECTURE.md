@@ -23,7 +23,7 @@ NutriTrack has been rebuilt using a modern JavaScript stack with React.js for th
 ## Project Structure
 
 ```
-calorie-contra/
+NutriTrack/
 ├── client/                    # React frontend
 │   ├── src/
 │   │   ├── components/       # React components
