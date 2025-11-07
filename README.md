@@ -50,25 +50,31 @@
 ## 📸 Screenshots
 
 ### Dashboard Overview
-<img width="1916" height="876" alt="image" src="https://github.com/user-attachments/assets/48941c82-5f12-42a5-90b0-e99f6ac948cc" />
+<img width="1597" height="762" alt="image" src="https://github.com/user-attachments/assets/5c954666-6df1-4f7f-8305-19a612fe354d" />
+<img width="1558" height="920" alt="image" src="https://github.com/user-attachments/assets/38eda8fe-432a-4611-b7e7-15195bcabdf2" />
+
 
 
 ### Food Search Interface  
-<img width="1919" height="873" alt="image" src="https://github.com/user-attachments/assets/7cbda9d0-88d9-4f30-801e-2b9af3e6c0c3" />
+<img width="1919" height="789" alt="image" src="https://github.com/user-attachments/assets/ce8a10db-5c0e-4ed8-a9e0-aa368490fa12" />
+
 
 
 ### Food Log Interface
-<img width="1793" height="712" alt="image" src="https://github.com/user-attachments/assets/e28e1191-f8a9-4c34-8fea-8c227a9ae669" />
+<img width="1894" height="910" alt="image" src="https://github.com/user-attachments/assets/b2fb9437-dbe2-414e-aa45-2a26a103ba39" />
 
 
 ### Food Log with Visual Analytics
-*Screenshots will be added here showing the enhanced food log with progress bars and nutrient visualizations*
+<img width="1018" height="335" alt="image" src="https://github.com/user-attachments/assets/a6ec0eab-e842-4cf8-9b5b-ad71120e6c73" />
+
 
 ### Daily Progress Dashboard
-*Screenshots will be added here showing daily totals with gradient cards*
+<img width="1403" height="836" alt="image" src="https://github.com/user-attachments/assets/697a881f-fda0-458d-9019-fb04ecdfe582" />
+
 
 ### Individual Food Entry Visualizations
-*Screenshots will be added here showing food entries with color-coded nutrient bars*
+<img width="1401" height="882" alt="image" src="https://github.com/user-attachments/assets/5bcf2195-1af9-48ad-8222-2b8555a739fa" />
+
 
 ## 🚀 Quick Start
 
