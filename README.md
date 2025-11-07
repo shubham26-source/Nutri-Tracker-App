@@ -1,74 +1,168 @@
-# 🥗 NutriTrack - AI-Powered Nutrition Tracker
-
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](your-demo-link-here)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/KJ-Somaiya-College-of-Engineering/calorie-contra-main)
-[![Python](https://img.shields.io/badge/Python-3.11-yellow)](https://python.org)
-[![Quart](https://img.shields.io/badge/Quart-0.19.4-red)](https://quart.palletsprojects.com/)
-
-> A modern, AI-powered nutrition tracking web application that helps users monitor their daily calorie intake and macronutrients with intelligent food recognition and personalized nutrition advice.
-
-## 🚀 Features
-
-### Core Features
-- **🔍 Smart Food Search** - Search from USDA's comprehensive food database
-- **📊 Interactive Dashboard** - Beautiful charts showing daily and weekly nutrition data
-- **🤖 AI Nutrition Assistant** - Powered by Google Gemini AI for personalized advice
-- **📱 Modern Responsive UI** - Works seamlessly on desktop and mobile devices
-- **👤 User Authentication** - Secure login and registration system
-- **📈 Progress Tracking** - Visual analytics with animated charts
-
-### Advanced Features  
-- **Real-time Nutrition Calculation** - Instant macronutrient breakdown
-- **Weekly Progress Visualization** - Animated bar charts showing trends
-- **Circular Progress Indicators** - Modern UI for daily goal tracking
-- **Chatbot Integration** - Interactive AI assistant for nutrition queries
-- **Session Management** - Persistent user sessions and data
-
-## 🛠️ Tech Stack
-
-**Backend:**
-- **Framework:** Quart (Async Python web framework)
-- **Database:** SQLAlchemy with AsyncIO support
-- **AI Integration:** Google Gemini API
-- **Authentication:** Werkzeug security utilities
-- **Data Visualization:** Matplotlib with animations
-
-**Frontend:**
-- **UI Framework:** Bootstrap 5.3
-- **Styling:** Custom CSS with gradients and animations
-- **JavaScript:** Modern ES6+ with async/await
-- **Charts:** Custom SVG circular progress indicators
-- **Fonts:** Inter font family for modern typography
-
-**External APIs:**
-- **USDA FoodData Central API** - Comprehensive nutrition database
-- **Google Gemini AI** - Advanced language model for nutrition advice
-
-## 📸 Screenshots
-
-### Dashboard Overview
-<img width="1916" height="876" alt="image" src="https://github.com/user-attachments/assets/48941c82-5f12-42a5-90b0-e99f6ac948cc" />
-
-
-### Food Search Interface  
-<img width="1919" height="873" alt="image" src="https://github.com/user-attachments/assets/7cbda9d0-88d9-4f30-801e-2b9af3e6c0c3" />
-
-
-### Food Log Interface
-<img width="1793" height="712" alt="image" src="https://github.com/user-attachments/assets/e28e1191-f8a9-4c34-8fea-8c227a9ae669" />
-
-
-### AI Chatbot Assistant
-<img width="434" height="626" alt="image" src="https://github.com/user-attachments/assets/6b0420b8-92ea-4051-a951-e099689dddae" />
-<img width="436" height="616" alt="image" src="https://github.com/user-attachments/assets/6d3dfe4d-0fba-494b-acf3-c62f0601fe24" />
+🥗 NutriTrack – Full-Stack Nutrition Tracker (React + Node.js + Express)
 
 
 
 
-## 🚀 Quick Start
 
-### Prerequisites
-- Python 3.11+
-- USDA API Key ([Get one here](https://fdc.nal.usda.gov/api-guide.html))
-- Google Gemini API Key ([Get one here](https://makersuite.google.com/app/apikey))
 
+
+
+
+
+A modern, full-stack nutrition tracking web application that allows users to search foods, view nutrition details, and maintain a personal calorie log — built using React, TailwindCSS, Node.js, Express.js, and a lightweight database.
+
+✅ Features
+🔍 Food Search
+
+Search foods using a local nutrition dataset (fast & offline capable)
+
+Smart suggestions & popular shortcuts
+
+Modern search UI built with React
+
+🍽️ Food Logging
+
+Add food items to your daily log
+
+View calories, portions & nutrition info
+
+Automatically stores logs in the backend database
+
+📊 My Food Log Dashboard
+
+View your eaten items
+
+Track calorie consumption
+
+Organized by date
+
+🎨 Modern UI
+
+Fully responsive React interface
+
+Styled with TailwindCSS + smooth gradients
+
+Clean and modern visual design
+
+🗄 Backend API
+
+Node.js + Express REST API
+
+Separate routes for:
+✅ Food Search
+✅ Add Food Log
+✅ Fetch Log
+
+Clean folder structure
+
+🛠 Tech Stack
+Frontend
+
+✅ React (Vite-based setup)
+
+✅ TailwindCSS
+
+✅ Component-based UI
+
+✅ Fetch API for backend communication
+
+Backend
+
+✅ Node.js
+
+✅ Express.js
+
+✅ REST endpoints
+
+✅ API input validation
+
+Database
+
+✅ Local database file (SQLite / .db)
+
+✅ Stores user logs
+
+✅ Lightweight & fast
+
+📁 Project Structure (Simplified)
+NutriTrack/
+│
+├── client/                 # React Frontend
+│   ├── src/
+│   │   ├── components/     # UI components (Search, Log, Cards, Navbar)
+│   │   ├── pages/          # Search page, MyLog page
+│   │   └── App.jsx
+│   ├── public/
+│   └── package.json
+│
+├── server/                 # Backend (Node + Express)
+│   ├── routes/
+│   │   ├── food.js         # Food search API
+│   │   └── log.js          # Add/view food log API
+│   ├── db/
+│   │   └── database.js     # DB connection + queries
+│   ├── index.js            # Server entry
+│   └── package.json
+│
+└── README.md
+
+🚀 Quick Start
+✅ 1. Clone the repository
+git clone https://github.com/shubham26-source/Nutri-Tracker-App.git
+cd Nutri-Tracker-App
+
+✅ 2. Install backend dependencies
+cd server
+npm install
+
+✅ 3. Install frontend dependencies
+cd ../client
+npm install
+
+✅ 4. Start the backend
+npm start
+
+✅ 5. Start the React frontend
+npm run dev
+
+📸 Screenshots
+✅ Home / Search Page
+
+(Insert updated screenshot here)
+
+✅ Food Log Page
+
+(Insert updated screenshot here)
+
+✅ Backend API Response
+
+(Optional)
+
+🧩 API Endpoints
+🔍 Search Food
+GET /api/food/search?query=apple
+
+➕ Add Food Log
+POST /api/log/add
+{
+  "name": "Banana",
+  "calories": 105
+}
+
+📄 Get Logs
+GET /api/log/all
+
+✅ Future Enhancements
+
+Integrate real-time nutrition API (CalorieNinjas / Edamam)
+
+Add user authentication
+
+Add weekly & monthly analytics
+
+Add AI-powered nutrition assistant
+
+🎓 Developed By
+
+Shubham Sharma
+B.Tech – K.J. Somaiya College of Engineering
