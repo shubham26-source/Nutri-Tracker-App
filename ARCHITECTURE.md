@@ -1,7 +1,7 @@
-# CalorieContra - React + Node.js Architecture Documentation
+# NutiTrack- React + Node.js Architecture Documentation
 
 ## Overview
-CalorieContra has been rebuilt using a modern JavaScript stack with React.js for the frontend and Node.js/Express.js for the backend. This document explains the architecture, components, and how they work together.
+NutriTrack has been rebuilt using a modern JavaScript stack with React.js for the frontend and Node.js/Express.js for the backend. This document explains the architecture, components, and how they work together.
 
 ## Tech Stack
 
